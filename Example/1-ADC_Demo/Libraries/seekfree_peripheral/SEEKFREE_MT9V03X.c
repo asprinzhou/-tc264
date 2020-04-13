@@ -325,8 +325,12 @@ void mt9v03x_vsync(void)
 {
 	CLEAR_GPIO_FLAG(MT9V03X_VSYNC_PIN);
 	now_col = 0;
-	DMA_SET_DESTINATION(MT9V03X_DMA_CH, (void *)&mt9v03x_image[0]);
-	dma_start(MT9V03X_DMA_CH);
+	if(!mt9v03x_finish_flag)//查看图像数组是否使用完毕，如果未使用完毕则不开始采集，避免出现访问冲突
+	{
+		DMA_SET_DESTINATION(MT9V03X_DMA_CH, (void *)&mt9v03x_image[0]);
+		dma_start(MT9V03X_DMA_CH);
+	}
+
 }
 
 

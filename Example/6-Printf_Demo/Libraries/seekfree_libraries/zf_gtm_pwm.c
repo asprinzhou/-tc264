@@ -281,7 +281,15 @@ void gtm_pwm_init(ATOM_PIN_enum pwmch, uint32 freq, uint32 duty)
     g_atomConfig.synchronousUpdateEnabled = TRUE;
 
 	g_atomConfig.dutyCycle = (uint32)((uint64)duty * g_atomConfig.period / GTM_ATOM0_PWM_DUTY_MAX);
-    IfxGtm_Atom_Pwm_init(&g_atomDriver, &g_atomConfig);
+    switch(atom_channel->atom)
+	{
+		case 0: g_atomConfig.dutyCycle = (uint32)((uint64)duty * g_atomConfig.period / GTM_ATOM0_PWM_DUTY_MAX); break;
+		case 1: g_atomConfig.dutyCycle = (uint32)((uint64)duty * g_atomConfig.period / GTM_ATOM1_PWM_DUTY_MAX); break;
+		case 2: g_atomConfig.dutyCycle = (uint32)((uint64)duty * g_atomConfig.period / GTM_ATOM2_PWM_DUTY_MAX); break;
+		case 3: g_atomConfig.dutyCycle = (uint32)((uint64)duty * g_atomConfig.period / GTM_ATOM3_PWM_DUTY_MAX); break;
+	}
+
+	IfxGtm_Atom_Pwm_init(&g_atomDriver, &g_atomConfig);
     IfxGtm_Atom_Pwm_start(&g_atomDriver, TRUE);
 }
 

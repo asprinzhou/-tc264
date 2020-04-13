@@ -35,7 +35,7 @@ void systick_delay(STMN_enum stmn, uint32 time)
 	uint32 stm_clk;
 	stm_clk = IfxStm_getFrequency(IfxStm_getAddress((IfxStm_Index)stmn));
 
-	IfxStm_waitTicks(&MODULE_STM0, (uint32)((uint64)stm_clk*time/1000000000));
+	IfxStm_waitTicks(IfxStm_getAddress((IfxStm_Index)stmn), (uint32)((uint64)stm_clk*time/1000000000));
 }
 
 

@@ -27,8 +27,6 @@ int core0_main(void)
 
     //用户在此处调用各种初始化函数等
 
-
-
     enableInterrupts();
 
     while (TRUE)

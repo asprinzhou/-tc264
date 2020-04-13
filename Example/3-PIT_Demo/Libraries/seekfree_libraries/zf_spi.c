@@ -279,7 +279,7 @@ void spi_mosi(SPIN_enum spi_n, SPI_PIN_enum cs_pin, uint8 *modata, uint8 *midata
 
 	moudle = IfxQspi_getAddress((IfxQspi_Index)spi_n);
 
-	bacon.U = MODULE_QSPI2.BACON.U;
+	bacon.U = moudle->BACON.U;
 
 	bacon.B.DL = 7;
 	bacon.B.IDLE = 1;
@@ -300,11 +300,11 @@ void spi_mosi(SPIN_enum spi_n, SPI_PIN_enum cs_pin, uint8 *modata, uint8 *midata
 		i = 0;
 		while(i < (len-1))
 		{
-			while(MODULE_QSPI2.STATUS.B.TXFIFOLEVEL != 0);
+			while(moudle->STATUS.B.TXFIFOLEVEL != 0);
 			IfxQspi_write8(moudle, IfxQspi_ChannelId_0, modata, 1);
-			while(MODULE_QSPI2.STATUS.B.RXFIFOLEVEL == 0);
+			while(moudle->STATUS.B.RXFIFOLEVEL == 0);
 			if(NULL != midata)	IfxQspi_read8(moudle,midata,1);
-			else				(void)MODULE_QSPI2.RXEXIT.U;
+			else				(void)moudle->RXEXIT.U;
 			modata++;
 			midata++;
 			i++;
@@ -314,11 +314,11 @@ void spi_mosi(SPIN_enum spi_n, SPI_PIN_enum cs_pin, uint8 *modata, uint8 *midata
 	//发送最后一个数据
 	if(continuous)	IfxQspi_writeBasicConfigurationEndStream(moudle, bacon.U);
 	IfxQspi_writeTransmitFifo(moudle, *modata);
-	while(MODULE_QSPI2.STATUS.B.TXFIFOLEVEL != 0);
+	while(moudle->STATUS.B.TXFIFOLEVEL != 0);
 
-	while(MODULE_QSPI2.STATUS.B.RXFIFOLEVEL == 0);
+	while(moudle->STATUS.B.RXFIFOLEVEL == 0);
 	if(NULL != midata)	IfxQspi_read8(moudle,midata,1);
-	else				(void)MODULE_QSPI2.RXEXIT.U;
+	else				(void)moudle->RXEXIT.U;
 }
 
 
