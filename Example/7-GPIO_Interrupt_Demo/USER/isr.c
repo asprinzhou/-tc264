@@ -55,13 +55,11 @@ IFX_INTERRUPT(eru_ch0_ch4_isr, ERU_CH0_CH4_INT_SERVICE, ERU_CH0_CH4_INT_PRIO)
 	if(GET_GPIO_FLAG(ERU_CH0_REQ4_P10_7))//通道0中断
 	{
 		CLEAR_GPIO_FLAG(ERU_CH0_REQ4_P10_7);
-		printf("eru ch0 be triggered\n");
 	}
 
 	if(GET_GPIO_FLAG(ERU_CH4_REQ13_P15_5))//通道4中断
 	{
 		CLEAR_GPIO_FLAG(ERU_CH4_REQ13_P15_5);
-		printf("eru ch4 be triggered\n");
 	}
 }
 
@@ -70,13 +68,11 @@ IFX_INTERRUPT(eru_ch1_ch5_isr, ERU_CH1_CH5_INT_SERVICE, ERU_CH1_CH5_INT_PRIO)
 	if(GET_GPIO_FLAG(ERU_CH1_REQ5_P10_8))//通道1中断
 	{
 		CLEAR_GPIO_FLAG(ERU_CH1_REQ5_P10_8);
-		printf("eru ch1 be triggered\n");
 	}
 
 	if(GET_GPIO_FLAG(ERU_CH5_REQ1_P15_8))//通道5中断
 	{
 		CLEAR_GPIO_FLAG(ERU_CH5_REQ1_P15_8);
-		printf("eru ch5 be triggered\n");
 	}
 }
 
@@ -102,7 +98,8 @@ IFX_INTERRUPT(eru_ch3_ch7_isr, ERU_CH3_CH7_INT_SERVICE, ERU_CH3_CH7_INT_PRIO)
 	if(GET_GPIO_FLAG(ERU_CH3_REQ6_P02_0))//通道3中断
 	{
 		CLEAR_GPIO_FLAG(ERU_CH3_REQ6_P02_0);
-		if(1 == camera_type)mt9v03x_vsync();
+		if		(1 == camera_type)	mt9v03x_vsync();
+		else if	(3 == camera_type)	ov7725_vsync();
 
 	}
 	if(GET_GPIO_FLAG(ERU_CH7_REQ16_P15_1))//通道7中断
@@ -117,7 +114,8 @@ IFX_INTERRUPT(eru_ch3_ch7_isr, ERU_CH3_CH7_INT_SERVICE, ERU_CH3_CH7_INT_PRIO)
 IFX_INTERRUPT(dma_ch5_isr, ERU_DMA_INT_SERVICE, ERU_DMA_INT_PRIO)
 {
 
-	if(1 == camera_type)	mt9v03x_dma();
+	if		(1 == camera_type)	mt9v03x_dma();
+	else if	(3 == camera_type)	ov7725_dma();
 }
 
 

@@ -38,6 +38,15 @@ typedef enum    // 枚举上下拉选项
 
 #define GET_PORT_IN_ADDR(pin)	(uint8 *)(&IfxPort_getAddress((IfxPort_Index)(pin/32))->IN + pin%32/8)
 
+
+
+//需要特别注意P20_2是不能用于输出的，仅仅只有输入的功能
+//需要特别注意P20_2是不能用于输出的，仅仅只有输入的功能
+//需要特别注意P20_2是不能用于输出的，仅仅只有输入的功能
+
+
+
+
 //------------------------------------------------------
 //通用GPIO操作
 void gpio_init(PIN_enum pin, GPIODIR_enum dir, uint8 dat, GPIOMODE_enum pinconf);

@@ -98,7 +98,8 @@ IFX_INTERRUPT(eru_ch3_ch7_isr, ERU_CH3_CH7_INT_SERVICE, ERU_CH3_CH7_INT_PRIO)
 	if(GET_GPIO_FLAG(ERU_CH3_REQ6_P02_0))//通道3中断
 	{
 		CLEAR_GPIO_FLAG(ERU_CH3_REQ6_P02_0);
-		if(1 == camera_type)mt9v03x_vsync();
+		if		(1 == camera_type)	mt9v03x_vsync();
+		else if	(3 == camera_type)	ov7725_vsync();
 
 	}
 	if(GET_GPIO_FLAG(ERU_CH7_REQ16_P15_1))//通道7中断
@@ -113,7 +114,8 @@ IFX_INTERRUPT(eru_ch3_ch7_isr, ERU_CH3_CH7_INT_SERVICE, ERU_CH3_CH7_INT_PRIO)
 IFX_INTERRUPT(dma_ch5_isr, ERU_DMA_INT_SERVICE, ERU_DMA_INT_PRIO)
 {
 
-	if(1 == camera_type)	mt9v03x_dma();
+	if		(1 == camera_type)	mt9v03x_dma();
+	else if	(3 == camera_type)	ov7725_dma();
 }
 
 

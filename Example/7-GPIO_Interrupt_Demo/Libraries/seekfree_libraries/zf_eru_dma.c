@@ -21,9 +21,18 @@
 #include "IfxDma_Dma.h"
 #include "IfxScuEru.h"
 #include "isr_config.h"
+#include "zf_assert.h"
 #include "zf_eru_dma.h"
 
 
+typedef struct
+{
+    Ifx_DMA_CH IFX_ALIGN(256) linked_list[8];//DMA链表
+    IfxDma_Dma_Channel channel;              //DMA通道句柄
+}DMA_LINK;
+
+
+DMA_LINK dma_link_list;
 
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      eru触发dma初始化
@@ -36,7 +45,7 @@
 //	@return		void
 //  Sample usage:
 //-------------------------------------------------------------------------------------------------------------------
-void eru_dma_init(IfxDma_ChannelId dma_ch, uint8 *source_addr, uint8 *destination_addr, ERU_PIN_enum eru_pin, TRIGGER_enum trigger, uint16 dma_count)
+uint8 eru_dma_init(IfxDma_ChannelId dma_ch, uint8 *source_addr, uint8 *destination_addr, ERU_PIN_enum eru_pin, TRIGGER_enum trigger, uint16 dma_count)
 {
 	IfxDma_Dma_Channel dmaChn;
 	//eru触发DMA通道号   在eru文件中设置eru的优先级，即为触发的通道
@@ -51,27 +60,85 @@ void eru_dma_init(IfxDma_ChannelId dma_ch, uint8 *source_addr, uint8 *destinatio
     IfxDma_Dma_ChannelConfig cfg;
     IfxDma_Dma_initChannelConfig(&cfg, &dma);
 
-    cfg.transferCount                   = dma_count;
+	uint8  list_num, i;
+	uint16 single_channel_dma_count;
+
+	ZF_ASSERT(!(dma_count%8));//传输次数必须为8的倍数
+
+
+	list_num = 1;
+	single_channel_dma_count = dma_count / list_num;
+	if(16384 < single_channel_dma_count)
+	{
+		while(TRUE)
+		{
+			single_channel_dma_count = dma_count / list_num;
+			if((single_channel_dma_count <= 16384) && !(dma_count % list_num))
+			{
+				break;
+			}
+			list_num++;
+			if(list_num > 8) ZF_ASSERT(FALSE);
+		}
+	}
+
+
+	if(1 == list_num)
+	{
+		cfg.shadowControl 				= IfxDma_ChannelShadow_none;
+		cfg.operationMode       	    = IfxDma_ChannelOperationMode_single;
+		cfg.shadowAddress				= 0;
+	}
+	else
+	{
+		cfg.shadowControl 				= IfxDma_ChannelShadow_linkedList;
+		cfg.operationMode       		= IfxDma_ChannelOperationMode_continuous;
+		cfg.shadowAddress 				= IFXCPU_GLB_ADDR_DSPR(IfxCpu_getCoreId(), (unsigned)&dma_link_list.linked_list[1]);
+	}
+
     cfg.requestMode                     = IfxDma_ChannelRequestMode_oneTransferPerRequest;
     cfg.moveSize                        = IfxDma_ChannelMoveSize_8bit;
+    cfg.busPriority 					= IfxDma_ChannelBusPriority_high;
 
-    cfg.busPriority = IfxDma_ChannelBusPriority_high;
-
-    cfg.sourceAddress      				= (unsigned)(source_addr);
+    cfg.sourceAddress      				= IFXCPU_GLB_ADDR_DSPR(IfxCpu_getCoreId(), source_addr);
     cfg.sourceAddressCircularRange      = IfxDma_ChannelIncrementCircular_none;
     cfg.sourceCircularBufferEnabled     = TRUE;
 
-    cfg.destinationAddress 				= IFXCPU_GLB_ADDR_DSPR(IfxCpu_getCoreId(), destination_addr);
     cfg.destinationAddressIncrementStep = IfxDma_ChannelIncrementStep_1;
-    cfg.operationMode       			= IfxDma_ChannelOperationMode_single;
-	cfg.channelId          				= (IfxDma_ChannelId)dma_ch;
-	cfg.hardwareRequestEnabled  		= TRUE;
-	cfg.channelInterruptEnabled       	= TRUE;
 
+	cfg.channelId          				= (IfxDma_ChannelId)dma_ch;
+	cfg.hardwareRequestEnabled  		= FALSE;
+	cfg.channelInterruptEnabled       	= TRUE;
 	cfg.channelInterruptPriority      	= ERU_DMA_INT_PRIO;
 	cfg.channelInterruptTypeOfService 	= (IfxSrc_Tos)ERU_DMA_INT_SERVICE;
 
+
+
+	cfg.destinationAddress 				= IFXCPU_GLB_ADDR_DSPR(IfxCpu_getCoreId(), destination_addr);
+
+	cfg.transferCount                   = single_channel_dma_count;
+
 	IfxDma_Dma_initChannel(&dmaChn, &cfg);
+
+	if(1 < list_num)
+	{
+		i = 0;
+		while(i < list_num)
+		{
+			cfg.destinationAddress 		= IFXCPU_GLB_ADDR_DSPR(IfxCpu_getCoreId(), destination_addr + single_channel_dma_count * i);
+			if(i == (list_num - 1))	cfg.shadowAddress = IFXCPU_GLB_ADDR_DSPR(IfxCpu_getCoreId(), (unsigned)&dma_link_list.linked_list[0]);
+			else					cfg.shadowAddress = IFXCPU_GLB_ADDR_DSPR(IfxCpu_getCoreId(), (unsigned)&dma_link_list.linked_list[i+1]);
+			cfg.transferCount           = single_channel_dma_count;
+
+			IfxDma_Dma_initLinkedListEntry((void *)&dma_link_list.linked_list[i], &cfg);
+			i++;
+		}
+	}
+
+
+	IfxDma_Dma_getSrcPointer(&dma_link_list.channel)->B.CLRR = 1;
+
+	return list_num;
 }
 
 

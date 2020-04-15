@@ -63,9 +63,7 @@
 													//例如场中断选择ERU_CH3 那么像素引脚就不能选择ERU_CH7，因为3和7的中断是共用的。
 
 #define MT9V03X_DMA_CH			IfxDma_ChannelId_5	//定义使用的DMA通道 0-47可选  通道号越大优先级越低
-													//修改此处之后，需要修改对应的ERU中断优先级，例如此处设置为IfxDma_ChannelId_5则对应的ERU中断优先级应该设置为5
-             
-                        
+
 //摄像头命令枚举
 typedef enum
 {

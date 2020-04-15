@@ -68,6 +68,7 @@ void mma8451_self_check(void)
 //-------------------------------------------------------------------------------------------------------------------
 uint8 mma845x_init(void)
 {       
+	simiic_init();
     systick_delay_ms(STM0, 50);
     
     mma8451_self_check();

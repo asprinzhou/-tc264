@@ -34,8 +34,12 @@
 
 
 
-#define SEEKFREE_SCL    P13_0                           //定义SCL引脚  可任意更改为其他IO
-#define SEEKFREE_SDA    P13_1                           //定义SDA引脚  可任意更改为其他IO
+#define SEEKFREE_SCL    P02_3                           //定义SCL引脚  可任意更改为其他IO
+#define SEEKFREE_SDA    P02_2                           //定义SDA引脚  可任意更改为其他IO
+
+
+#define SIMIIC_DELAY_TIME	20
+
 
 typedef enum IIC       //DAC模块
 {

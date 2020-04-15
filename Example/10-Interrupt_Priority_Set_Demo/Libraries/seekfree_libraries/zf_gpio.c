@@ -60,6 +60,7 @@ Ifx_P* get_port(PIN_enum pin)
 //  @param      pinmode     引脚配置（可设置参数由zf_gpio.h文件内GPIOMODE_enum枚举值确定）
 //  @return     void
 //  Sample usage:           gpio_init(P00_0, GPO, 1, PUSHPULL);//P00_0初始化为GPIO功能、输出模式、输出高电平、推挽输出
+//  @note					需要特别注意P20_2是不能用于输出的，仅仅只有输入的功能
 //-------------------------------------------------------------------------------------------------------------------
 void gpio_init(PIN_enum pin, GPIODIR_enum dir, uint8 dat, GPIOMODE_enum pinmode)
 {

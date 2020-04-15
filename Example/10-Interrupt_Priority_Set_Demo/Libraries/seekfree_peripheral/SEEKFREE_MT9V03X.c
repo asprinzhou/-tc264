@@ -38,7 +38,6 @@
 #include "zf_gpio.h"
 #include "zf_eru.h"
 #include "zf_eru_dma.h"
-#include "stdio.h"
 #include "SEEKFREE_MT9V03X.h"
 
 
@@ -48,6 +47,8 @@ IFX_ALIGN(4) uint8 mt9v03x_image[MT9V03X_H][MT9V03X_W];
 uint8   receive[3];
 uint8   receive_num = 0;
 vuint8  uart_receive_flag;
+
+uint8   link_list_num;
 
 //需要配置到摄像头的数据
 int16 MT9V03X_CFG[CONFIG_FINISH][2]=
@@ -305,7 +306,7 @@ void mt9v03x_init(void)
 		gpio_init((PIN_enum)(MT9V03X_DATA_PIN+i), GPI, 0, PULLUP);
 	}
 
-    eru_dma_init(MT9V03X_DMA_CH, GET_PORT_IN_ADDR(MT9V03X_DATA_PIN), mt9v03x_image[0], MT9V03X_PCLK_PIN, RISING, MT9V03X_W);
+    link_list_num = eru_dma_init(MT9V03X_DMA_CH, GET_PORT_IN_ADDR(MT9V03X_DATA_PIN), mt9v03x_image[0], MT9V03X_PCLK_PIN, RISING, MT9V03X_W*MT9V03X_H);
 
     eru_init(MT9V03X_VSYNC_PIN, FALLING);	//初始化场中断，并设置为下降沿触发中断
     restoreInterrupts(interrupt_state);
@@ -313,7 +314,6 @@ void mt9v03x_init(void)
 
 
 uint8   mt9v03x_finish_flag = 0;    //一场图像采集完成标志位
-uint8	now_col;					//当前正在采集的行
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      MT9V03X摄像头场中断
 //  @param      NULL
@@ -324,16 +324,15 @@ uint8	now_col;					//当前正在采集的行
 void mt9v03x_vsync(void)
 {
 	CLEAR_GPIO_FLAG(MT9V03X_VSYNC_PIN);
-	now_col = 0;
+
 	if(!mt9v03x_finish_flag)//查看图像数组是否使用完毕，如果未使用完毕则不开始采集，避免出现访问冲突
 	{
-		DMA_SET_DESTINATION(MT9V03X_DMA_CH, (void *)&mt9v03x_image[0]);
 		dma_start(MT9V03X_DMA_CH);
 	}
 
 }
 
-
+uint8	mt9v03x_dma_int_num;	//当前DMA中断次数
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      MT9V03X摄像头DMA完成中断
 //  @param      NULL
@@ -344,16 +343,15 @@ void mt9v03x_vsync(void)
 void mt9v03x_dma(void)
 {
 	CLEAR_DMA_FLAG(MT9V03X_DMA_CH);
+	mt9v03x_dma_int_num++;
 
-	now_col++;
-
-	if(MT9V03X_H > now_col)
+	if(mt9v03x_dma_int_num >= link_list_num)
 	{
-		dma_start(MT9V03X_DMA_CH);
-	}
-	else
-	{
+		//采集完成
+		mt9v03x_dma_int_num = 0;
 		mt9v03x_finish_flag = 1;//一副图像从采集开始到采集结束耗时3.8MS左右(50FPS、188*120分辨率)
+		dma_stop(MT9V03X_DMA_CH);
+
 	}
 }
 

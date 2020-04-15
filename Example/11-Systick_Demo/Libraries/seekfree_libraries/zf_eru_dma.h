@@ -29,9 +29,9 @@
 #define CLEAR_DMA_FLAG(dma_ch)	IfxDma_clearChannelInterrupt(&MODULE_DMA, dma_ch);
 
 
-#define DMA_SET_DESTINATION(dma_ch, destination_addr)	IfxDma_setChannelDestinationAddress(&MODULE_DMA, dma_ch, (void *)destination_addr)
+#define DMA_SET_DESTINATION(dma_ch, destination_addr)	IfxDma_setChannelDestinationAddress(&MODULE_DMA, dma_ch, (void *)IFXCPU_GLB_ADDR_DSPR(IfxCpu_getCoreId(), destination_addr))
 
-void eru_dma_init(IfxDma_ChannelId dma_ch, uint8 *source_addr, uint8 *destination_addr, ERU_PIN_enum eru_pin, TRIGGER_enum trigger, uint16 dma_count);
+uint8 eru_dma_init(IfxDma_ChannelId dma_ch, uint8 *source_addr, uint8 *destination_addr, ERU_PIN_enum eru_pin, TRIGGER_enum trigger, uint16 dma_count);
 void dma_stop(IfxDma_ChannelId dma_ch);
 void dma_start(IfxDma_ChannelId dma_ch);
 

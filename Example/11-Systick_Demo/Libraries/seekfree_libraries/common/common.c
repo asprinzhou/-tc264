@@ -22,7 +22,7 @@
 #include "SysSe/Bsp/Bsp.h"
 #include "common.h"
 
-uint8 camera_type;
+uint8 camera_type;	//摄像头型号  1：总钻风   2：凌瞳（暂未支持）3：小钻风
 
 
 

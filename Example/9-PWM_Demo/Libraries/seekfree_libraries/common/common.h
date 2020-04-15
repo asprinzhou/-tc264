@@ -111,7 +111,7 @@ typedef enum //枚举端口电平
 #include <string.h>
 
 
-extern uint8 camera_type;
+extern uint8 camera_type;	//摄像头型号  1：总钻风   2：凌瞳（暂未支持）3：小钻风
 
 
 void get_clk(void);
