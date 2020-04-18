@@ -37,7 +37,7 @@
 void pit_init(CCU6N_enum ccu6n, CCU6_CHN_enum pit_ch, uint32 time)
 {
 	uint8 i;
-	Ifx_CCU6 *module;
+	volatile Ifx_CCU6 *module;
 	uint64 timer_input_clk;
 	IfxCcu6_Timer g_Ccu6Timer;
 	IfxCcu6_TimerId timer_id;

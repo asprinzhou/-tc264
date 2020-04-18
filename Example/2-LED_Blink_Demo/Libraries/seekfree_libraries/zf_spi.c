@@ -206,7 +206,7 @@ void spi_init(SPIN_enum spi_n, SPI_PIN_enum sck_pin, SPI_PIN_enum mosi_pin, SPI_
 	IfxQspi_SpiMaster_Channel MasterChHandle;
 	IfxQspi_SpiMaster_Pins MasterPins;
 	IfxQspi_SpiMaster_Output SlsoPin;
-	Ifx_QSPI *moudle;
+	volatile Ifx_QSPI *moudle;
 
 	moudle = IfxQspi_getAddress((IfxQspi_Index)spi_n);
 
@@ -275,7 +275,7 @@ void spi_mosi(SPIN_enum spi_n, SPI_PIN_enum cs_pin, uint8 *modata, uint8 *midata
 {
 	uint32 i;
 	Ifx_QSPI_BACON bacon;
-	Ifx_QSPI *moudle;
+	volatile Ifx_QSPI *moudle;
 
 	moudle = IfxQspi_getAddress((IfxQspi_Index)spi_n);
 

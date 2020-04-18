@@ -28,9 +28,9 @@
 //  @return     void
 //  Sample usage:           文件内部使用，用户无需关心
 //-------------------------------------------------------------------------------------------------------------------
-Ifx_P* get_port(PIN_enum pin)
+volatile Ifx_P* get_port(PIN_enum pin)
 {
-	Ifx_P *port;
+	volatile Ifx_P *port;
 
 	switch(pin&0xffe0)
 	{

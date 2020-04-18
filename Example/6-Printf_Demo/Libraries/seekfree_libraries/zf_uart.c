@@ -244,7 +244,7 @@ void uart_init(UARTN_enum uartn, uint32 baud, UART_PIN_enum tx_pin, UART_PIN_enu
 {
 	boolean interrupt_state = disableInterrupts();
 
-	Ifx_ASCLIN *moudle = IfxAsclin_getAddress((IfxAsclin_Index)uartn);
+	volatile Ifx_ASCLIN *moudle = IfxAsclin_getAddress((IfxAsclin_Index)uartn);
 
 	IfxAsclin_Asc_initModuleConfig(&uart_config, moudle); 		//初始化化配置结构体
 

@@ -44,13 +44,14 @@ typedef enum //枚举GPT12引脚
 	GPT12_T3INA_P02_6,  GPT12_T3INB_P10_4,	//T3定时器 计数引脚可选范围
 	GPT12_T3EUDA_P02_7, GPT12_T3EUDB_P10_7, //T3定时器 计数方向引脚可选范围
 
-	//在LQFP144封装中没有P10_8 、P10_0
+	//在LQFP144封装中没有P10_8
 	GPT12_T4INA_P02_8,  GPT12_T4INB_P10_8,	//T4定时器 计数引脚可选范围
 	GPT12_T4EUDA_P00_9, GPT12_T4EUDB_P33_5, //T4定时器 计数方向引脚可选范围
 
 	GPT12_T5INB_P10_3,	GPT12_T5INA_P21_7,  //T5定时器 计数引脚可选范围
 	GPT12_T5EUDB_P10_1, GPT12_T5EUDA_P21_6, //T5定时器 计数方向引脚可选范围
 
+	//在LQFP144封装中没有P10_0
 	GPT12_T6INB_P10_2,  GPT12_T6INA_P20_3,  //T6定时器 计数引脚可选范围
 	GPT12_T6EUDB_P10_0, GPT12_T6EUDA_P20_0, //T6定时器 计数方向引脚可选范围
 }GPT_PIN_enum;
