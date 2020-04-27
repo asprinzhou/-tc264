@@ -270,12 +270,19 @@ derivative tc26
 		{
 			select "(.data.data_cpu1|.data.data_cpu1*)";
 			select "(.bss.bss_cpu1|.bss.bss_cpu1*)";
+			select ".bss.cpu1_dsram";
+			select ".data.cpu1_dsram";
+			select ".zdata.cpu1_dsram";
 		}
 		
 		group (ordered, contiguous, align = 4, run_addr = mem:dsram0)
 		{
 			select "(.data.data_cpu0|.data.data_cpu0*)";
 			select "(.bss.bss_cpu0|.bss.bss_cpu0*)";
+			select ".bss.cpu0_dsram";
+			select ".data.cpu0_dsram";
+			select ".zdata.cpu0_dsram";
+			
 		}
 
 #		if LCF_DEFAULT_HOST == LCF_CPU1
@@ -413,6 +420,7 @@ derivative tc26
 		group  (ordered, run_addr=mem:pfls0)
 		{
 			select ".rodata*";
+			
 		}
 		group  (ordered, run_addr=mem:pfls0)
 		{

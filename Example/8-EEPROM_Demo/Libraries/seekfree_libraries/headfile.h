@@ -63,6 +63,7 @@
 #include "SEEKFREE_WIRELESS.h"
 #include "SEEKFREE_IPS200_PARALLEL8.h"
 #include "SEEKFREE_7725.h"
+#include "SEEKFREE_RDA5807.h"
 
 #endif
 

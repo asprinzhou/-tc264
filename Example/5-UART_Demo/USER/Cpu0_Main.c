@@ -19,6 +19,7 @@
 
 
 #include "headfile.h"
+#pragma section all "cpu0_dsram"
 
 uint8 uart_buff;
 
@@ -58,4 +59,6 @@ int core0_main(void)
     	//单片机收到后会返回发送的字符，串口助手就会显示刚才发送的东西
     }
 }
+
+#pragma section all restore
 

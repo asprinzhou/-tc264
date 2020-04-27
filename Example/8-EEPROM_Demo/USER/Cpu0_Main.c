@@ -19,6 +19,7 @@
 
 
 #include "headfile.h"
+#pragma section all "cpu0_dsram"
 
 #define EXAMPLE_EEPROM_SECTOR        (0)
 
@@ -80,4 +81,6 @@ int core0_main(void)
 
     }
 }
+
+#pragma section all restore
 

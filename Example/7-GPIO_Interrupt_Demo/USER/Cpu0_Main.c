@@ -19,6 +19,7 @@
 
 
 #include "headfile.h"
+#pragma section all "cpu0_dsram"
 
 uint16 adc_result;
 
@@ -57,9 +58,11 @@ int core0_main(void)
 
     while (TRUE)
     {
-
+		//在isr.c的中断函数，函数定义的第二个参数固定为0，请不要更改，即使你用CPU1处理中断也不要更改，需要CPU1处理中断只需要在isr_config.h内修改对应的宏定义即可
     	//程序运行之后，使用杜邦线将P15_4、P15_5、P14_3、P15_8连接到GND，然后在断开，在连接如此往复
     	//在FSS窗口会看到对应的提示信息
     }
 }
 
+
+#pragma section all restore

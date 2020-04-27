@@ -19,6 +19,7 @@
 
 
 #include "isr_config.h"
+#include "stdio.h"
 #include "isr.h"
 
 //PIT中断函数  示例
@@ -55,11 +56,13 @@ IFX_INTERRUPT(eru_ch0_ch4_isr, ERU_CH0_CH4_INT_SERVICE, ERU_CH0_CH4_INT_PRIO)
 	if(GET_GPIO_FLAG(ERU_CH0_REQ4_P10_7))//通道0中断
 	{
 		CLEAR_GPIO_FLAG(ERU_CH0_REQ4_P10_7);
+		printf("eru ch0 be triggered\n");
 	}
 
 	if(GET_GPIO_FLAG(ERU_CH4_REQ13_P15_5))//通道4中断
 	{
 		CLEAR_GPIO_FLAG(ERU_CH4_REQ13_P15_5);
+        printf("eru ch4 be triggered\n");
 	}
 }
 
@@ -68,11 +71,13 @@ IFX_INTERRUPT(eru_ch1_ch5_isr, ERU_CH1_CH5_INT_SERVICE, ERU_CH1_CH5_INT_PRIO)
 	if(GET_GPIO_FLAG(ERU_CH1_REQ5_P10_8))//通道1中断
 	{
 		CLEAR_GPIO_FLAG(ERU_CH1_REQ5_P10_8);
+        printf("eru ch1 be triggered\n");
 	}
 
 	if(GET_GPIO_FLAG(ERU_CH5_REQ1_P15_8))//通道5中断
 	{
 		CLEAR_GPIO_FLAG(ERU_CH5_REQ1_P15_8);
+        printf("eru ch5 be triggered\n");
 	}
 }
 

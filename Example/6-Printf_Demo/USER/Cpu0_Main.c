@@ -19,6 +19,7 @@
 
 
 #include "headfile.h"
+#pragma section all "cpu0_dsram"
 
 uint16 num;
 
@@ -45,3 +46,4 @@ int core0_main(void)
     }
 }
 
+#pragma section all restore

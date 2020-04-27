@@ -50,7 +50,6 @@ void pit_init(CCU6N_enum ccu6n, CCU6_CHN_enum pit_ch, uint32 time);
 
 
 //------------------------------------以下代码用于PIT中断------------------------------------
-//-----------------调用本宏函数前，务必先调用pit_init函数，以初始化PIT外设-------------------
 #define pit_interrupt_ms(ccu6n, pit_ch, time)  pit_init(ccu6n, pit_ch, time*1000)	//(单位为 毫秒)
 #define pit_interrupt_us(ccu6n, pit_ch, time)  pit_init(ccu6n, pit_ch, time)    	//(单位为 微秒)
 

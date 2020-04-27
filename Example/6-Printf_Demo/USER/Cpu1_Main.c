@@ -18,14 +18,19 @@
  ********************************************************************************************************************/
 
 #include "headfile.h"
+#pragma section all "cpu1_dsram"
+
+
 
 
 void core1_main(void)
 {
+	disableInterrupts();
     IfxScuWdt_disableCpuWatchdog(IfxScuWdt_getCpuWatchdogPassword());
 
     //用户在此处调用各种初始化函数等
 
+    enableInterrupts();
     while (TRUE)
     {
 		//用户在此处编写任务代码
@@ -33,3 +38,9 @@ void core1_main(void)
 
     }
 }
+
+
+
+
+
+#pragma section all restore

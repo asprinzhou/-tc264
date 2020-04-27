@@ -314,6 +314,7 @@ void mt9v03x_init(void)
 
 
 uint8   mt9v03x_finish_flag = 0;    //一场图像采集完成标志位
+uint8	mt9v03x_dma_int_num;	//当前DMA中断次数
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      MT9V03X摄像头场中断
 //  @param      NULL
@@ -324,15 +325,20 @@ uint8   mt9v03x_finish_flag = 0;    //一场图像采集完成标志位
 void mt9v03x_vsync(void)
 {
 	CLEAR_GPIO_FLAG(MT9V03X_VSYNC_PIN);
-
+	mt9v03x_dma_int_num = 0;
 	if(!mt9v03x_finish_flag)//查看图像数组是否使用完毕，如果未使用完毕则不开始采集，避免出现访问冲突
 	{
+		if(1 == link_list_num)
+		{
+			//没有采用链接传输模式 重新设置目的地址
+			DMA_SET_DESTINATION(MT9V03X_DMA_CH, mt9v03x_image[0]);
+		}
 		dma_start(MT9V03X_DMA_CH);
 	}
 
 }
 
-uint8	mt9v03x_dma_int_num;	//当前DMA中断次数
+
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      MT9V03X摄像头DMA完成中断
 //  @param      NULL

@@ -19,7 +19,7 @@
 
 
 #include "headfile.h"
-
+#pragma section all "cpu0_dsram"
 
 
 int core0_main(void)
@@ -43,7 +43,9 @@ int core0_main(void)
 
     while (TRUE)
     {
+		//在isr.c的中断函数，函数定义的第二个参数固定为0，请不要更改，即使你用CPU1处理中断也不要更改，需要CPU1处理中断只需要在isr_config.h内修改对应的宏定义即可
     	//程序运行之后 PIT中断每执行一次就会打印一次到FSS窗口
     }
 }
 
+#pragma section all restore

@@ -19,19 +19,23 @@
 
 
 #include "headfile.h"
+#pragma section all "cpu0_dsram"
+//将本语句与#pragma section all restore语句之间的全局变量都放在CPU0的RAM中
 
-
+uint32 data;
 int core0_main(void)
 {
 	get_clk();//获取时钟频率  务必保留
 
-    //用户在此处调用各种初始化函数等
-    enableInterrupts();
+	//用户在此处调用各种初始化函数等
+	enableInterrupts();
 
-    while (TRUE)
-    {
-    	//用户在此处编写任务代码
+	while (TRUE)
+	{
+		//用户在此处编写任务代码
 
-    }
+	}
 }
 
+
+#pragma section all restore

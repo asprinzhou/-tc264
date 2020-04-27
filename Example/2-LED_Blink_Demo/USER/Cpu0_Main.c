@@ -19,6 +19,7 @@
 
 
 #include "headfile.h"
+#pragma section all "cpu0_dsram"
 
 uint8 gpio_status;
 
@@ -57,4 +58,6 @@ int core0_main(void)
     	systick_delay_ms(STM0, 100);
     }
 }
+
+#pragma section all restore
 

@@ -19,6 +19,7 @@
 
 
 #include "headfile.h"
+#pragma section all "cpu0_dsram"
 
 int16 speed;
 
@@ -46,3 +47,4 @@ int core0_main(void)
     }
 }
 
+#pragma section all restore
