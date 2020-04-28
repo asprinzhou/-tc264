@@ -24,6 +24,8 @@
 #include "stdio.h"
 
 
+#define ADC_SAMPLE_FREQUENCY	10000000//最大10Mhz
+
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      ADC初始化
 //  @param      adcn            选择ADC模块(ADC_0、ADC_1、ADC_2)
@@ -44,6 +46,7 @@ void adc_init(VADCN_enum vadc_n, VADC_CHN_enum vadc_chn)
 	{
 		mudule_init_flag = 1;
 		IfxVadc_Adc_initModule(&vadc, &adcConfig);
+
 	}
 	else
 	{
@@ -58,6 +61,10 @@ void adc_init(VADCN_enum vadc_n, VADC_CHN_enum vadc_chn)
     adcGroupConfig.arbiter.requestSlotBackgroundScanEnabled = TRUE;
     adcGroupConfig.backgroundScanRequest.autoBackgroundScanEnabled = TRUE;
     adcGroupConfig.backgroundScanRequest.triggerConfig.gatingMode = IfxVadc_GatingMode_always;
+	adcGroupConfig.inputClass[0].resolution = IfxVadc_ChannelResolution_12bit;
+	adcGroupConfig.inputClass[0].sampleTime = 1.0f/ADC_SAMPLE_FREQUENCY;
+	adcGroupConfig.inputClass[1].resolution = IfxVadc_ChannelResolution_12bit;
+	adcGroupConfig.inputClass[1].sampleTime = 1.0f/ADC_SAMPLE_FREQUENCY;
 
     IfxVadc_Adc_initGroup(&adcGroup, &adcGroupConfig);
 

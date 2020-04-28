@@ -22,6 +22,7 @@
 #pragma section all "cpu0_dsram"
 //将本语句与#pragma section all restore语句之间的全局变量都放在CPU0的RAM中
 
+
 int core0_main(void)
 {
 	get_clk();//获取时钟频率  务必保留
@@ -29,7 +30,7 @@ int core0_main(void)
 	//用户在此处调用各种初始化函数等
 
 	enableInterrupts();
-
+	gpio_init(P20_9, GPO, 0, PUSHPULL);
 
 	while (TRUE)
 	{

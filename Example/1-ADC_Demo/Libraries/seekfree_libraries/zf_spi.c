@@ -200,7 +200,7 @@ void spi_mux(SPIN_enum spi_n, SPI_PIN_enum sck_pin, SPI_PIN_enum mosi_pin, SPI_P
 //-------------------------------------------------------------------------------------------------------------------
 void spi_init(SPIN_enum spi_n, SPI_PIN_enum sck_pin, SPI_PIN_enum mosi_pin, SPI_PIN_enum miso_pin, SPI_PIN_enum cs_pin, uint8 mode, uint32 baud)
 {
-	//IfxQspi_getAddress
+
 	IfxQspi_SpiMaster_Config MasterConfig;
 	IfxQspi_SpiMaster MasterHandle;
 	IfxQspi_SpiMaster_Channel MasterChHandle;
