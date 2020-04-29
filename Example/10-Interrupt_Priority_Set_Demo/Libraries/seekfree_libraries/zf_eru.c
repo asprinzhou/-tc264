@@ -144,7 +144,9 @@ void eru_init(ERU_PIN_enum eru_pin, TRIGGER_enum trigger)
 		}break;
 
  	}
+#pragma warning 507
  	IfxSrc_init(src, eru_service, eru_priority);
+#pragma warning default
  	IfxSrc_enable(src);
 
     restoreInterrupts(interrupt_state);

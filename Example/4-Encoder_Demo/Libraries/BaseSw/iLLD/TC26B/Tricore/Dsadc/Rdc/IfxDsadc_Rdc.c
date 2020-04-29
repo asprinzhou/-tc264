@@ -359,8 +359,10 @@ IFX_STATIC boolean IfxDsadc_Rdc_initHwChannels(IfxDsadc_Rdc *driver, const IfxDs
                 {
                     srcr = &MODULE_SRC.DSADC.DSADC3.SRM;
                 }
+#pragma warning 507
 
                 IfxSrc_init(srcr, configHw->servReqProvider, configHw->servReqPriority);
+#pragma warning default
                 IfxSrc_enable(srcr);
             }
         }

@@ -54,7 +54,7 @@ void systick_start(STMN_enum stmn)
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief     获得当前System tick timer的值
 //  @param     stmn				选择使用的模块
-//  @return    uint32 			返回从开始到现在的时间
+//  @return    uint32 			返回从开始到现在的时间(单位10ns)
 //  Sample usage:               uint32 tim = systick_getval(STM0);
 //-------------------------------------------------------------------------------------------------------------------
 uint32 systick_getval(STMN_enum stmn)
@@ -65,6 +65,6 @@ uint32 systick_getval(STMN_enum stmn)
 	stm_clk = IfxStm_getFrequency(IfxStm_getAddress((IfxStm_Index)stmn));
 
 	time = IfxStm_getLower(IfxStm_getAddress((IfxStm_Index)stmn)) - systick_count[stmn];
-	time = (uint32)((uint64)time * 1000000000 / stm_clk);
+	time = (uint32)((uint64)time * 100000000 / stm_clk);
 	return time;
 }

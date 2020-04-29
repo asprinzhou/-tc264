@@ -335,6 +335,7 @@ uint32 Ifx_Crc_table(Ifc_Crc *driver, uint8 *p, uint32 len)
                 crc = ((crc >> 8) | (*p++ << (orderMinusHeight))) ^ crctab[crc & 0xff];
             }
         }
+#pragma warning 529
 
         if (!driver->table->refin)
         {
@@ -350,6 +351,7 @@ uint32 Ifx_Crc_table(Ifc_Crc *driver, uint8 *p, uint32 len)
                 crc = (crc >> 8) ^ crctab[crc & 0xff];
             }
         }
+#pragma warning default
     }
     else if (driver->table->order <= 16)
     {
@@ -369,6 +371,7 @@ uint32 Ifx_Crc_table(Ifc_Crc *driver, uint8 *p, uint32 len)
                 crc = ((crc >> 8) | (*p++ << (orderMinusHeight))) ^ crctab[crc & 0xff];
             }
         }
+#pragma warning 529
 
         if (!driver->table->refin)
         {
@@ -384,6 +387,7 @@ uint32 Ifx_Crc_table(Ifc_Crc *driver, uint8 *p, uint32 len)
                 crc = (crc >> 8) ^ crctab[crc & 0xff];
             }
         }
+#pragma warning default
     }
     else if (driver->table->order <= 32)
     {
@@ -403,6 +407,7 @@ uint32 Ifx_Crc_table(Ifc_Crc *driver, uint8 *p, uint32 len)
                 crc = ((crc >> 8) | (*p++ << (orderMinusHeight))) ^ crctab[crc & 0xff];
             }
         }
+#pragma warning 529
 
         if (!driver->table->refin)
         {
@@ -418,6 +423,7 @@ uint32 Ifx_Crc_table(Ifc_Crc *driver, uint8 *p, uint32 len)
                 crc = (crc >> 8) ^ crctab[crc & 0xff];
             }
         }
+#pragma warning default
     }
 
     if (driver->refout ^ driver->table->refin)

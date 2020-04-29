@@ -164,13 +164,15 @@
 								<option id="com.tasking.ctc.cc.optimize.775309643" name="Optimization level:" superClass="com.tasking.ctc.cc.optimize" value="com.tasking.ctc.cc.optimize.0" valueType="enumerated"/>
 								<option id="com.tasking.ctc.cc.tradeoff.53559744" name="Trade-off between speed and size:" superClass="com.tasking.ctc.cc.tradeoff" value="com.tasking.ctc.cc.tradeoff.0" valueType="enumerated"/>
 								<option id="com.tasking.ctc.cc.definedSymbols.1587155176" name="Defined symbols" superClass="com.tasking.ctc.cc.definedSymbols"/>
+								<option id="com.tasking.ctc.cc.nowarning.1961106449" superClass="com.tasking.ctc.cc.nowarning" valueType="stringList">
+									<listOptionValue builtIn="false" value="W557"/>
+								</option>
 								<inputType id="com.tasking.ctc.cppInputType.1272022268" name="C++" superClass="com.tasking.ctc.cppInputType"/>
 								<inputType id="com.tasking.ctc.cpp.cInputType.69092563" name="C" superClass="com.tasking.ctc.cpp.cInputType"/>
 								<inputType id="com.tasking.ctc.cc.msInputType.1535524086" name="MS" superClass="com.tasking.ctc.cc.msInputType"/>
 							</tool>
 							<tool id="com.tasking.ctc.as.abs.debug.1390239146" name="Assembler" superClass="com.tasking.ctc.as.abs.debug">
-								<option id="com.tasking.ctc.as.includePaths.1708708624" name="Include paths" superClass="com.tasking.ctc.as.includePaths" valueType="includePath">
-								</option>
+								<option id="com.tasking.ctc.as.includePaths.1708708624" name="Include paths" superClass="com.tasking.ctc.as.includePaths"/>
 								<inputType id="com.tasking.ctc.asmInputType.1471959711" name="ASM" superClass="com.tasking.ctc.asmInputType"/>
 							</tool>
 							<tool id="com.tasking.ctc.lk.abs.debug.1142239087" name="Linker" superClass="com.tasking.ctc.lk.abs.debug">

@@ -285,6 +285,7 @@ boolean IfxGtm_Trig_toSent(Ifx_GTM *gtm, IfxGtm_Trig_SentGroup sentGroup, IfxGtm
     {
         config = table->trigger[sentTrig].source[source].channel[channel].config;
         result = config != 0xFF;
+#pragma warning 547
 
         if ((sentGroup / 6) == 0) // write to VADC registers
         {
@@ -306,6 +307,7 @@ boolean IfxGtm_Trig_toSent(Ifx_GTM *gtm, IfxGtm_Trig_SentGroup sentGroup, IfxGtm
         {
             __ldmst_c(&(gtm->INOUTSEL.DSADC.OUTSEL00.U), mask, value);
         }
+#pragma warning default
     }
 
     IFX_ASSERT(IFX_VERBOSE_LEVEL_ERROR, result);

@@ -201,13 +201,11 @@ void lcd_init(void)
     lcd_writeData(0x0E); 
     
     lcd_writeIndex(0x36);
-    switch(TFT_DISPLAY_DIR)//y x v
-    {
-        case 0: lcd_writeData(1<<7 | 1<<6 | 0<<5);  break;  //竖屏模式
-        case 1: lcd_writeData(0<<7 | 0<<6 | 0<<5);  break;  //竖屏模式  旋转180
-        case 2: lcd_writeData(1<<7 | 0<<6 | 1<<5);  break;  //横屏模式
-        case 3: lcd_writeData(0<<7 | 1<<6 | 1<<5);  break;  //横屏模式  旋转180
-    }
+
+    if      (TFT_DISPLAY_DIR==0)	lcd_writeData(1<<7 | 1<<6 | 0<<5);	//竖屏模式
+	else if (TFT_DISPLAY_DIR==1)	lcd_writeData(0<<7 | 0<<6 | 0<<5);	//竖屏模式  旋转180
+	else if (TFT_DISPLAY_DIR==2)	lcd_writeData(1<<7 | 0<<6 | 1<<5);	//横屏模式
+	else                           	lcd_writeData(0<<7 | 1<<6 | 1<<5);	//横屏模式  旋转180
 
     lcd_writeIndex(0xe0); 
     lcd_writeData(0x0f); 

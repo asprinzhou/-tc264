@@ -59,6 +59,7 @@ void pit_init(CCU6N_enum ccu6n, CCU6_CHN_enum pit_ch, uint32 time)
 		timer_period = (uint32)(timer_input_clk * time / 1000000);
 		if(timer_period < 0xffff)	break;
 		timer_input_clk >>= 1;
+		i++;
 	}
 	if(16 <= i)	IFX_ASSERT(IFX_VERBOSE_LEVEL_ERROR, FALSE);
 

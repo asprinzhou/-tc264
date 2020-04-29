@@ -83,8 +83,10 @@ void gpt12_mux(GPTN_enum gptn, GPT_PIN_enum count_pin, GPT_PIN_enum dir_pin)
 			else	ZF_ASSERT(FALSE);
 		}break;
 	}
+#pragma warning 507
 	IfxGpt12_initTxInPinWithPadLevel(count, IfxPort_InputMode_pullUp, IfxPort_PadDriver_cmosAutomotiveSpeed1);
 	IfxGpt12_initTxEudInPinWithPadLevel(dir, IfxPort_InputMode_pullUp, IfxPort_PadDriver_cmosAutomotiveSpeed1);
+#pragma warning default
 }
 
 //-------------------------------------------------------------------------------------------------------------------

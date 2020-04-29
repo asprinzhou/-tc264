@@ -183,13 +183,14 @@ void Ifx_AngleTrkF32_init(Ifx_AngleTrkF32 *aObsv, const Ifx_AngleTrkF32_Config *
     aObsv->cfgData.sqrAmplMin     = config->sqrAmplMin;
     aObsv->sinIn                  = config->sinIn;
     aObsv->cosIn                  = config->cosIn;
+#pragma warning 549
 
     if (!__neqf(config->kp, 0) && !__neqf(config->ki, 0) && !__neqf(config->kp, 0))
     {   /* all gains are zero, use default */
         /* FIXME might not be requied as set by Ifx_AngleTrkF32_initConfig() */
         Ifx_AngleTrkF32_setControlGains(&aObsv->cfgData, ATO_K, ATO_T, ATO_PSI);
     }
-
+#pragma warning default
     Ifx_AngleTrkF32_setUserSampling(aObsv, Ts);
     aObsv->angleErr  = 0.0F;
     aObsv->angleEst  = 0.0F;

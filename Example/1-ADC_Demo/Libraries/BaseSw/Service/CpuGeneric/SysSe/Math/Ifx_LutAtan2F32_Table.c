@@ -55,7 +55,9 @@ sint16 Ifx_g_LutAtan2F32_FxpAngle_table[IFX_LUTATAN2F32_SIZE];
 #endif
 
 const Ifx_Lut_FxpAngle Ifx_g_LutAtan2F32_FxpAngle_table[1024 + 1] = {
-    0,//IFX_LUT_F32_TO_FXPANGLE(0),±‹√‚≥ˆœ÷æØ∏Ê
+#pragma warning 587
+	IFX_LUT_F32_TO_FXPANGLE(0),
+#pragma warning default
     IFX_LUT_F32_TO_FXPANGLE(0.000976562189559319),
     IFX_LUT_F32_TO_FXPANGLE(0.00195312251647882),
     IFX_LUT_F32_TO_FXPANGLE(0.00292967911813999),
@@ -1081,6 +1083,7 @@ const Ifx_Lut_FxpAngle Ifx_g_LutAtan2F32_FxpAngle_table[1024 + 1] = {
     IFX_LUT_F32_TO_FXPANGLE(0.784909643651259),
     IFX_LUT_F32_TO_FXPANGLE(0.785398163397448),
 };
+
 #endif
 
 const float32          Ifx_g_LutAtan2F32_table[IFX_LUTATAN2F32_SIZE + 1] =

@@ -41,9 +41,9 @@ uint32 systick_getval(STMN_enum stmn);
 #define systick_delay_ns(stmn, time)	systick_delay(stmn, time)   		//设置延时时间  单位ns
 
 //------------------------------------以下宏定义用于获取当前时间------------------------------------
-#define systick_getval_ms(stmn)         systick_getval(stmn)/1000000        //获取当前计时时间  单位ms
-#define systick_getval_us(stmn)         systick_getval(stmn)/1000           //获取当前计时时间  单位us
-#define systick_getval_ns(stmn)         systick_getval(stmn)       			//获取当前计时时间  单位ns
+#define systick_getval_ms(stmn)         systick_getval(stmn)/100000         //获取当前计时时间  单位ms
+#define systick_getval_us(stmn)         systick_getval(stmn)/100            //获取当前计时时间  单位us
+#define systick_getval_ns(stmn)         systick_getval(stmn)*10    			//获取当前计时时间  单位ns
 
 
 #endif

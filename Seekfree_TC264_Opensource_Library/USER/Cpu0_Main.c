@@ -23,6 +23,12 @@
 //将本语句与#pragma section all restore语句之间的全局变量都放在CPU0的RAM中
 
 
+//工程导入到软件之后，应该选中工程然后点击refresh刷新一下之后再编译
+//工程默认设置为关闭优化，可以自己右击工程选择properties->C/C++ Build->Setting
+//然后在右侧的窗口中找到C/C++ Compiler->Optimization->Optimization level处设置优化等级
+//一般默认新建立的工程都会默认开2级优化，因此大家也可以设置为2级优化
+
+
 int core0_main(void)
 {
 	get_clk();//获取时钟频率  务必保留

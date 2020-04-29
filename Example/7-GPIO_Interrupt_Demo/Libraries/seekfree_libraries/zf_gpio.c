@@ -49,7 +49,9 @@ volatile Ifx_P* get_port(PIN_enum pin)
 		case P33_0:	port = &MODULE_P33;	break;
 		default:break;
 	}
+#pragma warning 507
 	return port;
+#pragma warning default
 }
 
 //-------------------------------------------------------------------------------------------------------------------

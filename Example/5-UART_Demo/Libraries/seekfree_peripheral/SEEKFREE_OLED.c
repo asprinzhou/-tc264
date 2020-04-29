@@ -485,7 +485,7 @@ void oled_dis_bmp(uint16 high, uint16 width, uint8 *p,uint8 value)
         for(j=0; j<width; j++)
         {
             dat = 0;
-            if( i<(temp-1) || !temp1 || temp1>=1)dat |= (*(p+i*8*width+j+width*0) > value? 1: 0)<<0;
+            dat |= (*(p+i*8*width+j+width*0) > value? 1: 0)<<0;
             if( i<(temp-1) || !temp1 || temp1>=2)dat |= (*(p+i*8*width+j+width*1) > value? 1: 0)<<1;
             if( i<(temp-1) || !temp1 || temp1>=3)dat |= (*(p+i*8*width+j+width*2) > value? 1: 0)<<2;
             if( i<(temp-1) || !temp1 || temp1>=4)dat |= (*(p+i*8*width+j+width*3) > value? 1: 0)<<3;

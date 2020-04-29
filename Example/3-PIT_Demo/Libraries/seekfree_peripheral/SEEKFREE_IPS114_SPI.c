@@ -108,10 +108,10 @@ void ips114_init(void)
 	
     ips114_writeIndex(0x36);
     
-    if      (IPS114_DISPLAY_DIR==0)    ips114_writeData(0x00);
-    else if (IPS114_DISPLAY_DIR==1)    ips114_writeData(0xC0);
-    else if (IPS114_DISPLAY_DIR==2)    ips114_writeData(0x70);
-    else                            ips114_writeData(0xA0);
+    if      (IPS114_DISPLAY_DIR==0)	ips114_writeData(0x00);
+    else if (IPS114_DISPLAY_DIR==1)	ips114_writeData(0xC0);
+    else if (IPS114_DISPLAY_DIR==2)	ips114_writeData(0x70);
+    else                           	ips114_writeData(0xA0);
     
     ips114_writeIndex(0x3A); 
     ips114_writeData(0x05);

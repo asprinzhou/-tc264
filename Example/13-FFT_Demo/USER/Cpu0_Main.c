@@ -62,6 +62,7 @@ int core0_main(void)
     {
     	systick_start(STM0);						//开始计时
     	Ifx_FftF32_radix2(fft_out, fft_in, SIZE_N);	//进行FFT运算
+		//Ifx_FftF32_radix2I 为IFT（FFT逆变换）运算
 		use_time = systick_getval_us(STM0);			//获取计时时间
 
 		printf("use_time: %ldus\n", use_time);		//打印fft一次耗时多久
