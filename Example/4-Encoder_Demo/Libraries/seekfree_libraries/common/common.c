@@ -24,7 +24,6 @@
 
 uint8 camera_type;	//摄像头型号  1：总钻风   2：凌瞳（暂未支持）3：小钻风
 
-uint32 te;
 
 App_Cpu0 g_AppCpu0; //频率信息变量
 void get_clk(void)
@@ -41,5 +40,4 @@ void get_clk(void)
     g_AppCpu0.info.sysFreq = IfxScuCcu_getSpbFrequency();
     g_AppCpu0.info.stmFreq = IfxStm_getFrequency(&MODULE_STM0);
 
-    te = IfxScuCcu_getSriFrequency();
 }

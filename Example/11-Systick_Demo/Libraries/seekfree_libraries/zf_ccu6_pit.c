@@ -40,7 +40,6 @@ void pit_init(CCU6N_enum ccu6n, CCU6_CHN_enum pit_ch, uint32 time)
 	volatile Ifx_CCU6 *module;
 	uint64 timer_input_clk;
 	IfxCcu6_Timer g_Ccu6Timer;
-	IfxCcu6_TimerId timer_id;
 	IfxCcu6_Timer_Config timerConfig;
 	uint32 timer_period;
 
@@ -90,15 +89,15 @@ void pit_init(CCU6N_enum ccu6n, CCU6_CHN_enum pit_ch, uint32 time)
 			}
 			else
 			{
-				timerConfig.interrupt1.typeOfService  = CCU6_1_CH1_INT_SERVICE;
-				timerConfig.interrupt1.priority       = CCU6_1_CH1_ISR_PRIORITY;
+				timerConfig.interrupt2.typeOfService  = CCU6_1_CH1_INT_SERVICE;
+				timerConfig.interrupt2.priority       = CCU6_1_CH1_ISR_PRIORITY;
 			}
 		}break;
 	}
 
 	if(PIT_CH0 == pit_ch)
 	{
-		timer_id = IfxCcu6_TimerId_t12;
+		timerConfig.timer = IfxCcu6_TimerId_t12;
 		timerConfig.interrupt1.source         = IfxCcu6_InterruptSource_t12PeriodMatch;
 		timerConfig.interrupt1.serviceRequest = IfxCcu6_ServiceRequest_1;
 		timerConfig.base.t12Period 			  = timer_period;
@@ -107,17 +106,13 @@ void pit_init(CCU6N_enum ccu6n, CCU6_CHN_enum pit_ch, uint32 time)
 	}
 	else
 	{
-		timer_id = IfxCcu6_TimerId_t13;
+		timerConfig.timer = IfxCcu6_TimerId_t13;
 		timerConfig.interrupt2.source         = IfxCcu6_InterruptSource_t13PeriodMatch;
 		timerConfig.interrupt2.serviceRequest = IfxCcu6_ServiceRequest_2;
 		timerConfig.base.t13Period 			  = timer_period;
 		timerConfig.base.t13Frequency 		  = (float)timer_input_clk;
 		timerConfig.clock.t13countingInputMode = IfxCcu6_CountingInputMode_internal;
 	}
-
-
-    timerConfig.timer = timer_id;
-
     timerConfig.timer12.counterValue = 0;
     timerConfig.timer13.counterValue = 0;
     timerConfig.trigger.t13InSyncWithT12 = FALSE;
@@ -126,5 +121,78 @@ void pit_init(CCU6N_enum ccu6n, CCU6_CHN_enum pit_ch, uint32 time)
 
 	restoreInterrupts(interrupt_state);
 
+	IfxCcu6_setSuspendMode(module, IfxCcu6_SuspendMode_hard);
 	IfxCcu6_Timer_start(&g_Ccu6Timer);
+}
+
+//-------------------------------------------------------------------------------------------------------------------
+//  @brief      pit关闭
+//  @param      ccu6n           选择CCU6模块(CCU6_0、CCU6_1)
+//  @param      pit_ch          选择通道(PIT_CH0、PIT_CH1)
+//  @return     void
+//  @note
+//  Sample usage:				pit_close(CCU6_0, PIT_CH0);	//关闭CCU60 通道0的计时器
+//-------------------------------------------------------------------------------------------------------------------
+void pit_close(CCU6N_enum ccu6n, CCU6_CHN_enum pit_ch)
+{
+	volatile Ifx_CCU6 *module;
+	IfxCcu6_Timer g_Ccu6Timer;
+
+	module = IfxCcu6_getAddress((IfxCcu6_Index)ccu6n);
+
+	g_Ccu6Timer.ccu6 = module;
+	g_Ccu6Timer.timer = (IfxCcu6_TimerId)(pit_ch);
+
+	IfxCcu6_Timer_stop(&g_Ccu6Timer);
+}
+
+//-------------------------------------------------------------------------------------------------------------------
+//  @brief      pit开始
+//  @param      ccu6n           选择CCU6模块(CCU6_0、CCU6_1)
+//  @param      pit_ch          选择通道(PIT_CH0、PIT_CH1)
+//  @return     void
+//  @note
+//  Sample usage:				pit_start(CCU6_0, PIT_CH0);	//打开CCU60 通道0的计时器
+//-------------------------------------------------------------------------------------------------------------------
+void pit_start(CCU6N_enum ccu6n, CCU6_CHN_enum pit_ch)
+{
+	volatile Ifx_CCU6 *module;
+	IfxCcu6_Timer g_Ccu6Timer;
+
+	module = IfxCcu6_getAddress((IfxCcu6_Index)ccu6n);
+
+	g_Ccu6Timer.ccu6 = module;
+	g_Ccu6Timer.timer = (IfxCcu6_TimerId)(pit_ch);
+
+	IfxCcu6_Timer_start(&g_Ccu6Timer);
+}
+
+//-------------------------------------------------------------------------------------------------------------------
+//  @brief      禁止pit中断
+//  @param      ccu6n           选择CCU6模块(CCU6_0、CCU6_1)
+//  @param      pit_ch          选择通道(PIT_CH0、PIT_CH1)
+//  @return     void
+//  @note
+//  Sample usage:				pit_disable_interrupt(CCU6_0, PIT_CH0);	//禁止CCU60 通道0的中断
+//-------------------------------------------------------------------------------------------------------------------
+void pit_disable_interrupt(CCU6N_enum ccu6n, CCU6_CHN_enum pit_ch)
+{
+	volatile Ifx_CCU6 *module;
+	module = IfxCcu6_getAddress((IfxCcu6_Index)ccu6n);
+	IfxCcu6_disableInterrupt(module, pit_ch * 2 + 7);
+}
+
+//-------------------------------------------------------------------------------------------------------------------
+//  @brief      使能pit中断
+//  @param      ccu6n           选择CCU6模块(CCU6_0、CCU6_1)
+//  @param      pit_ch          选择通道(PIT_CH0、PIT_CH1)
+//  @return     void
+//  @note
+//  Sample usage:				pit_enable_interrupt(CCU6_0, PIT_CH0);	//开启CCU60 通道0的中断
+//-------------------------------------------------------------------------------------------------------------------
+void pit_enable_interrupt(CCU6N_enum ccu6n, CCU6_CHN_enum pit_ch)
+{
+	volatile Ifx_CCU6 *module;
+	module = IfxCcu6_getAddress((IfxCcu6_Index)ccu6n);
+	IfxCcu6_enableInterrupt(module, pit_ch * 2 + 7);
 }

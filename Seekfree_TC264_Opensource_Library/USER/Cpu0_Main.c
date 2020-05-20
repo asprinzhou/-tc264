@@ -34,14 +34,11 @@ int core0_main(void)
 	get_clk();//获取时钟频率  务必保留
 
 	//用户在此处调用各种初始化函数等
-
 	enableInterrupts();
-	gpio_init(P20_9, GPO, 0, PUSHPULL);
 
 	while (TRUE)
 	{
 		//用户在此处编写任务代码
-
 	}
 }
 

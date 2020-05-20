@@ -59,4 +59,9 @@ V1.0.7
 	修复使用systick_getval计时，当计时时间超过4秒左右会出现时间测量错误的问题。
 	对部分代码加入#pragma warning，避免提高优化等级时出现警告
 	修改1.8寸TFT屏幕初始化中关于屏幕方向选择部分的代码
-	
+
+V1.0.8
+	修复CCU61 通道1中断设置错误的问题
+	修复CCU6在线调试的时候定时器不能自动停止，导致在线调试时持续进中断的问题
+	对CCU6增加pit_close与pit_start函数用于控制定时器的开始与停止
+	对CCU6增加pit_disable_interrupt与pit_enable_interrupt函数用于控制中断开关

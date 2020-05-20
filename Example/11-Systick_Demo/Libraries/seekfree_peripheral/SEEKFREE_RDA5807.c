@@ -196,7 +196,7 @@ void rda5807_init(float freq)
 	//¸´Î»
 	rad5807m_simiic_write(FM_ADDRESS,dat,2);
 
-	systick_delay_ms(STM0, 600);
+	systick_delay_ms(STM0, 50);
 
 	while(rda5807_read_reg[8] != 0x58)
 	{

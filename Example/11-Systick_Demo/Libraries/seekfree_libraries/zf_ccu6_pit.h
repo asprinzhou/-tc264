@@ -46,7 +46,10 @@ typedef enum //枚举通道号
 
 
 void pit_init(CCU6N_enum ccu6n, CCU6_CHN_enum pit_ch, uint32 time);
-
+void pit_close(CCU6N_enum ccu6n, CCU6_CHN_enum pit_ch);
+void pit_start(CCU6N_enum ccu6n, CCU6_CHN_enum pit_ch);
+void pit_disable_interrupt(CCU6N_enum ccu6n, CCU6_CHN_enum pit_ch);
+void pit_enable_interrupt(CCU6N_enum ccu6n, CCU6_CHN_enum pit_ch);
 
 
 //------------------------------------以下代码用于PIT中断------------------------------------
