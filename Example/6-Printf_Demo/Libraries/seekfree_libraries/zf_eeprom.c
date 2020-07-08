@@ -49,7 +49,7 @@ uint8 flash_check(uint32 sector_num, uint32 page_num)
 //  @param      sector_num 		需要写入的扇区编号   参数范围0-11
 //  @return     void
 //  @since      v1.0
-//  Sample usage:               flash_erase_sector(0);
+//  Sample usage:               eeprom_erase_sector(0);
 //-------------------------------------------------------------------------------------------------------------------
 void eeprom_erase_sector(uint32 sector_num)
 {

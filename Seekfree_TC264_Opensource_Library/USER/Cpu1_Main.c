@@ -33,7 +33,6 @@ void core1_main(void)
     while (TRUE)
     {
 		//用户在此处编写任务代码
-    	
 
     }
 }
