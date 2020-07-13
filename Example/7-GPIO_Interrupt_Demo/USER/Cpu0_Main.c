@@ -21,7 +21,7 @@
 #include "headfile.h"
 #pragma section all "cpu0_dsram"
 
-uint16 adc_result;
+
 
 int core0_main(void)
 {
