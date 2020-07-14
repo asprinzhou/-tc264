@@ -48,10 +48,10 @@ int core0_main(void)
 
 
 	//检查当前页是否有数据，如果有数据则需要擦除整个扇区，
-	if(flash_check(EXAMPLE_EEPROM_SECTOR, 0))	eeprom_erase_sector(EXAMPLE_EEPROM_SECTOR);
-	if(flash_check(EXAMPLE_EEPROM_SECTOR, 1))	eeprom_erase_sector(EXAMPLE_EEPROM_SECTOR);
-	if(flash_check(EXAMPLE_EEPROM_SECTOR, 2))	eeprom_erase_sector(EXAMPLE_EEPROM_SECTOR);
-	if(flash_check(EXAMPLE_EEPROM_SECTOR, 3))	eeprom_erase_sector(EXAMPLE_EEPROM_SECTOR);
+	if(flash_check(EXAMPLE_EEPROM_SECTOR, 0) || flash_check(EXAMPLE_EEPROM_SECTOR, 1) || flash_check(EXAMPLE_EEPROM_SECTOR, 2) || flash_check(EXAMPLE_EEPROM_SECTOR, 3))
+	{
+		eeprom_erase_sector(EXAMPLE_EEPROM_SECTOR);
+	}
 
 	//当写入的数据不是32位时，建议将数据放入uint32 类型的变量中，在将该变量作为参数传入到eeprom_page_program函数
 	write_buf = write_data1;
