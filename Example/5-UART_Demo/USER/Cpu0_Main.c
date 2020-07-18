@@ -30,10 +30,12 @@ int core0_main(void)
 
     //用户在此处调用各种初始化函数等
 	uart_init(UART_0, 115200, UART0_TX_P14_0, UART0_RX_P14_1);
-	uart_putstr(UART_0, "\n---uart test---\n");
-    enableInterrupts();
-
 	//在本库中，对于串口的接收与发送都是通过中断完成的，因此想要正常的使用串口功能务必保证中断是开启的，也就是调用了enableInterrupts()
+    enableInterrupts();
+	
+	//调用enableInterrupts函数之后 才开始发送或者接收数据
+	uart_putstr(UART_0, "\n---uart test---\n");
+	
 	//串口的中断函数全部都在isr.c中。
 	
 	//串口中断相关的配置参数都在isr_config.h中
